@@ -1,0 +1,20 @@
+--config_plugin=filesystem
+--config_path=C:\Program Files\osquery\osquery.conf
+--enable_monitor=false
+--logger_plugin=filesystem
+--logger_path=C:\Program Files\osquery\log
+--logger_event_type=true
+--database_dump=false
+--database_path=C:\Program Files\osquery\osquery.db
+--force=true
+--pidfile=C:\Program Files\osquery\osquery.pid
+--disable_watchdog=true
+--watchdog_level=-1
+--disable_database=false
+--disable_events=false
+--windows_event_channels=System,Application,Setup,Security,Microsoft-Windows-Windows Defender/Operational
+--allow_unsafe
+--enable_ntfs_event_publisher=true
+--enable_powershell_events_subscriber=true
+--enable_windows_events_publisher=true
+--enable_windows_events_subscriber=true

@@ -1,0 +1,67 @@
+{
+
+ "options" : 
+ {
+	"config_plugin": "filesystem",
+	"logger_plugin": "filesystem",
+	"logger_path": "C:/Program Files/osquery/log",
+	"database_path": "C:/Program Files/osquery/osquery.db",
+	"pidfile": "C:/Program Files/osquery/osquery.pid",
+	"disable_watchdog": "true",
+	"watchdog_level": "-1",
+	"worker_threads": "2",
+	"disable_events": "false",
+	"disable_database": "false",
+	"enable_ntfs_event_publisher": "true",
+	"events_optimize": "true",
+	"events_expiry": "60",
+	"events_max": "5000",
+	"custom_plgx_EnableSSL": "true"
+ },
+ 
+ "schedule" : {
+    "win_dns_events_win_dns_response_events": {
+      "query": "SELECT  w.domain_name, resolved_ip, w.remote_address as remote_address_query, w.remote_port as remote_port_query, w1.remote_address as remote_address_response, w1.remote_port as remote_port_response, w.utc_time as utc_time_query, w1.utc_time as utc_time_response, w.pid FROM (SELECT * FROM ( SELECT * , row_number() over (partition by domain_name order by utc_time DESC) AS row_num FROM win_dns_events ) AS win_dns_events_ordered WHERE win_dns_events_ordered.row_num=1  ) w LEFT JOIN win_dns_response_events w1 USING (pid, domain_name);",
+      "interval": 60,
+     "snapshot": "true"
+    },
+   
+    "process_open_socket": {
+      "query": "SELECT pid, state as socket_state, protocol, local_address, local_port , remote_address, remote_port FROM process_open_sockets;",
+      "interval": 60,
+      "snapshot": "true"
+    },
+
+    "processes": {
+      "query": "SELECT *, ROUND((total_size*'10e-7'),2) AS memory_used, (user_time+system_time) AS CPU_time, (disk_bytes_read+disk_bytes_written)/elapsed_time AS BW FROM processes;",
+      "interval": 60,
+      "snapshot": "true"
+    },
+
+    "win_dns_events_win_dns_response_events_2": {
+      "query": "SELECT  w.domain_name, resolved_ip, w.remote_address as remote_address_query, w.remote_port as remote_port_query, w1.remote_address as remote_address_response, w1.remote_port as remote_port_response, w.utc_time as utc_time_query, w1.utc_time as utc_time_response, w.pid FROM (SELECT * FROM ( SELECT * , row_number() over (partition by domain_name order by utc_time DESC) AS row_num FROM win_dns_events ) AS win_dns_events_ordered WHERE win_dns_events_ordered.row_num=1  ) w LEFT JOIN win_dns_response_events w1 USING (pid, domain_name);",
+      "interval": 60,
+      "removed": "false"
+    },
+   
+    "process_open_socket_2": {
+      "query": "SELECT pid, state as socket_state, protocol, local_address, local_port , remote_address, remote_port FROM process_open_sockets;",
+      "interval": 60,
+      "removed": "false"
+    },
+
+   "processes_2": {
+      "query": "SELECT pid, name, path, cmdline, parent  FROM processes;",
+      "interval": 60,
+      "removed": "false"
+    }
+  },
+
+  "decorators": {
+    "load": [
+      "SELECT uuid AS host_uuid FROM system_info;",
+      "SELECT user AS username FROM logged_in_users ORDER BY time DESC LIMIT 1;",
+      "Select address from interface_addresses where mask='255.255.255.0' DESC LIMIT 1; "
+    ]
+  }
+}

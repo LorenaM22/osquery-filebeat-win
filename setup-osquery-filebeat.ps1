@@ -21,7 +21,7 @@ cd 'C:\Program Files\osquery\'
 
 #Download osquery.conf
 Write-Output "[+] - Downloading file osquery.conf"
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat/master/osquery.conf -OutFile osquery.conf
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat-win/master/osquery.conf -OutFile osquery.conf
 
 #Ejecutar osquery daemon
 Write-Output "[+] - Starting osquery daemon"
@@ -47,7 +47,7 @@ cd 'C:\Program Files\filebeat\'
 # Get Winlogbeat config
 cd 'C:\Program Files\filebeat'
 Write-Output "[+] - Downloading filebeat config"
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat/master/filebeat.yml -OutFile filebeat.yml
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat-win/master/filebeat.yml -OutFile filebeat.yml
 
 # Set Logstash server
 Write-Output "[+] - Setting Logstash in filebeat config"
@@ -56,13 +56,13 @@ Write-Output "[+] - Setting Logstash in filebeat config"
 
 #Download certs
 Write-Output "[+] - Downloading filebeat certs"
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat/master/certs.zip -OutFile certs.zip
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat-win/master/certs.zip -OutFile certs.zip
 Expand-Archive .\certs.zip -DestinationPath ./certs
 
 #osquery module
 Write-Output "[+] - Downloading osquery module"
 cd modules.d
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat/master/osquery.yml -OutFile osquery.yml
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/LorenaM22/osquery-filebeat-win/master/osquery.yml -OutFile osquery.yml
 cd.. 
 
 # Install filebeat

@@ -50,7 +50,7 @@
     "load": [
       "SELECT uuid AS host_uuid FROM system_info;",
       "SELECT user AS username FROM logged_in_users ORDER BY time DESC LIMIT 1;",
-      "SELECT address FROMom interface_addresses WHERE address LIKE '192.168.100%'; "
+      "SELECT address FROM interface_addresses WHERE address LIKE '192.168.100%'; "
     ]
   }
 }
